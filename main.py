@@ -2,6 +2,7 @@
 import os
 import openai
 import time
+import datetime
 import discord
 from dotenv import load_dotenv
 
@@ -16,7 +17,22 @@ senders = {}
 
 @client.event
 async def on_message(message):
+    today = datetime.date.today()
+    print("message received")
+    messageGuild = "logs/" + message.guild.name + "_" + str(message.guild.id)
+    messageThread = str(message.channel.id)
     authorid = message.author.id
+    messageContent = message.content
+
+    # start logging
+    if not os.path.exists(messageGuild):
+        os.makedirs(messageGuild)
+    if not os.path.exists(messageGuild + "/" + messageThread):
+        os.makedirs(messageGuild + "/" + messageThread)
+
+    logfilepath = messageGuild + "/" + messageThread + "/" + str(today) + ".txt"
+    with open(logfilepath, "a") as f:
+        f.write(str(message.id) + "," + str(authorid) + "," + message.author.name + ": " + messageContent + "\n")
 
     # don't respond to yourself
     if authorid == 1068623394817458197:
@@ -32,7 +48,6 @@ async def on_message(message):
                 loopmessage = loopmessage + y
         messages[index] = loopmessage
 
-    messageContent = message.content
     goodPrompt = True
 
     prompt = ""
@@ -40,31 +55,27 @@ async def on_message(message):
     for x in range(len(messages)):
         prompt = prompt + "\n" + messages[x]
     
+    # enforce 10 seconds between requests
+    if authorid not in senders:
+        senders[authorid] = time.time()
+    else:
+        timeleft = time.time() - senders[authorid]
+        if timeleft < 10:
+            return
+        else:
+            senders[authorid] = time.time()
+
     # Commands trigger
     if messageContent.startswith("!mimi"):
         if (messageContent == "!mimi source"):
-            await message.channel.send("")
-
-        # prompt = ""
-        # for x in range(len(messages)):
-        #     prompt = prompt + "\n" + messages[x]
-        # await message.channel.send(prompt)
-        # return
+            await message.channel.send("https://github.com/porkandbeans/OpenAI-discord-bot")
+            return
+        else:
+            await message.channel.send("!mimi: List of possible commands\n!mimi source: view my source code on github\njust saying \"mimi\" somewhere in your message: AI generated text response")
+            return
 
     # OpenAI trigger
     if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()):
-        
-        # enforce 10 seconds between requests
-        if authorid not in senders:
-            senders[authorid] = time.time()
-        else:
-            timeleft = time.time() - senders[authorid]
-            if timeleft < 10:
-                #await message.channel.send("Please allow 10 seconds between requests.")
-                return
-            else:
-                senders[authorid] = time.time()
-
         # deny long requests
         if len(messageContent) >= 500:
             goodPrompt = False
@@ -94,7 +105,6 @@ async def on_message(message):
                     botResponse = botResponse[1:]
                 if botResponse.lower().startswith("mimi:"):
                     botResponse = botResponse[6:]
-
                 await message.channel.send(botResponse)
             else:
                 messages.append("MIMI: I have nothing to say to that.")
