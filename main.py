@@ -17,7 +17,7 @@ senders = {}
 
 freeTime = (60 * 30) # 30 minutes
 premTime = 10 # 10 seconds
-devid = os.getenv('DEVELOPER_ID')
+devid = 183394842125008896
 
 @client.event
 async def on_message(message):
@@ -78,7 +78,7 @@ async def on_message(message):
             await message.channel.send("https://github.com/porkandbeans/OpenAI-discord-bot")
             return
         elif (messageContent == "!mimi patreon"):
-            await message.channel.send("I contact OpenAI via their API to do all my wicked-smart human language stuff. Unfortunately, bare metal does not grow on trees and they start charging money after a certain amount of requests are made. If you would like a shorter timeout period (free use is 30 minutes) then visit RubbishPanda's patreon and check out the benefits. $1 pledges get a 10 minute timeout, and $5 pledges only have to wait 10 seconds.\nhttps://github.com/porkandbeans/OpenAI-discord-bot")
+            await message.channel.send("I contact OpenAI via their API to do all my wicked-smart human language stuff. Unfortunately, bare metal does not grow on trees and they start charging money after a certain amount of requests are made. If you would like a shorter timeout period (free use is 30 minutes) then visit RubbishPanda's patreon and check out the benefits. $1 pledges get a 10 minute timeout, and $5 pledges only have to wait 10 seconds.\nhttps://www.patreon.com/gokritz/membership")
             return
         else:
             await message.channel.send("!mimi: List of possible commands\n!mimi source: view my source code on github\njust saying \"mimi\" somewhere in your message: AI generated text response")
