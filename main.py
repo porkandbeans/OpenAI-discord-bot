@@ -15,6 +15,10 @@ client = discord.Client(intents=discord.Intents.all())
 messages = []
 senders = {}
 
+freeTime = (60 * 30) # 30 minutes
+premTime = 10 # 10 seconds
+rubbishPandaID = 183394842125008896
+
 @client.event
 async def on_message(message):
     today = datetime.date.today()
@@ -60,7 +64,10 @@ async def on_message(message):
         senders[authorid] = time.time()
     else:
         timeleft = time.time() - senders[authorid]
-        if timeleft < 10:
+        checkTime = freeTime
+        if authorid == rubbishPandaID:
+            checkTime = premTime
+        if timeleft < checkTime:
             return
         else:
             senders[authorid] = time.time()
