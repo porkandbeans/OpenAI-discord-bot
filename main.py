@@ -79,7 +79,7 @@ async def on_message(message):
         if authorid == devid:
             checkTime = premTime
         if timeleft < checkTime:
-            print("ignoring for rate limit")
+            print("ignoring " + message.author.name + " for rate limit")
             return
         else:
             senders[authorid] = time.time()
