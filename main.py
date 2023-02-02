@@ -45,6 +45,7 @@ async def on_message(message):
 
     # don't respond to yourself
     if authorid == 1068623394817458197:
+        print("not responding to myself")
         return
 
     index = -1
@@ -150,6 +151,8 @@ async def on_message(message):
                     botResponse = botResponse[1:]
                 if botResponse.lower().startswith("mimi:"):
                     botResponse = botResponse[6:]
+
+                print("responding to " + message.author.name + ": " + botResponse)
                 await message.channel.send(botResponse)
             else:
                 messages.append("MIMI: I have nothing to say to that.")
