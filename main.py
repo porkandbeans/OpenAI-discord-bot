@@ -70,19 +70,22 @@ async def on_message(message):
         text = log.read()
         prompt = text[-500:]
     
+    timenow = time.time()
+
     # enforce 10 seconds between requests
     if authorid not in senders:
-        senders[authorid] = time.time()
+        senders[authorid] = timenow
     else:
-        timeleft = time.time() - senders[authorid]
+        timeleft = timenow - senders[authorid]
         checkTime = freeTime
         if authorid == devid:
             checkTime = premTime
         if timeleft < checkTime:
             print("ignoring " + message.author.name + " for rate limit")
+            print("time left: " + timeleft)
             return
         else:
-            senders[authorid] = time.time()
+            senders[authorid] = timenow
 
     # Commands trigger
     if messageContent.startswith("!mimi"):
