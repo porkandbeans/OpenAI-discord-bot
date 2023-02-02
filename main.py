@@ -69,7 +69,6 @@ async def on_message(message):
     with open(logfilepath, "r") as log:
         text = log.read()
         prompt = text[-500:]
-
     
     # enforce 10 seconds between requests
     if authorid not in senders:
@@ -80,6 +79,7 @@ async def on_message(message):
         if authorid == devid:
             checkTime = premTime
         if timeleft < checkTime:
+            print("ignoring for rate limit")
             return
         else:
             senders[authorid] = time.time()
