@@ -25,9 +25,12 @@ devid = 183394842125008896
 
 @client.event
 async def on_message(message):
+    
     guildid = message.guild.id
     today = datetime.date.today()
-    print("message received")
+
+    print(message.author.name + ": " + message.content)
+
     messageGuild = "logs/" + message.guild.name + "_" + str(guildid)
     messageThread = str(message.channel.id)
     authorid = message.author.id
