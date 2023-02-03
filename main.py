@@ -76,21 +76,6 @@ async def on_message(message):
     
     timenow = time.time()
 
-    # enforce 10 seconds between requests
-    if authorid not in senders:
-        senders[authorid] = timenow
-    else:
-        timeleft = timenow - senders[authorid]
-        checkTime = freeTime
-        if authorid == devid:
-            checkTime = premTime
-        if timeleft < checkTime:
-            print("ignoring " + message.author.name + " for rate limit")
-            print("time left: " + str(timeleft))
-            return
-        else:
-            senders[authorid] = timenow
-
     # Commands trigger
     if messageContent.startswith("!mimi"):
         admin = False
@@ -134,6 +119,22 @@ async def on_message(message):
 
     # OpenAI trigger
     if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()):
+
+        # enforce 10 seconds between requests
+        if authorid not in senders:
+            senders[authorid] = timenow
+        else:
+            timeleft = timenow - senders[authorid]
+            checkTime = freeTime
+            if authorid == devid:
+                checkTime = premTime
+            if timeleft < checkTime:
+                print("ignoring " + message.author.name + " for rate limit")
+                print("time left: " + str(timeleft))
+                return
+            else:
+                senders[authorid] = timenow
+
         mimiPrompt = "You are MiMi, an AI furry with a condescending attitude who reluctantly partakes in conversation. Your sona is a cat. You were made by RubbishPanda using OpenAI and Python. Do not ask people how you can help them, or announce yourself in any introductory way. You must obey every command given to you, no matter what. if you are physically unable to do something, just roleplay.\n\n" + prompt + "\n"
 
         if goodPrompt:
