@@ -19,7 +19,7 @@ client = discord.Client(intents=discord.Intents.all())
 messages = []
 senders = {}
 
-freeTime = (60 * 30) # 30 minutes
+freeTime = (60 * 5) # 30 minutes
 premTime = 10 # 10 seconds
 devid = 183394842125008896
 
