@@ -46,6 +46,10 @@ async def on_message(message):
     with open(logfilepath, "a") as f:
         f.write(message.author.name + ": " + messageContent + "\n")
 
+    # lets start making some training data for our own GPT model
+    with open("training.txt", "a") as f:
+        f.write(message.author.name + ": " + messageContent + "\n")
+
     # don't respond to yourself
     if authorid == 1068623394817458197:
         print("not responding to myself")
@@ -161,6 +165,10 @@ async def on_message(message):
             else:
                 messages.append("MIMI: I have nothing to say to that.")
                 await message.channel.send("I have nothing to say to that.")
+
+            # add data for training
+            with open("training.txt", "a") as f:
+                f.write("MiMi: " + botResponse + "\n")
 
 @client.event
 async def on_message_delete(message):
