@@ -166,10 +166,6 @@ async def on_message(message):
                 messages.append("MIMI: I have nothing to say to that.")
                 await message.channel.send("I have nothing to say to that.")
 
-            # add data for training
-            with open("training.txt", "a") as f:
-                f.write("MiMi: " + botResponse + "\n")
-
 @client.event
 async def on_message_delete(message):
     adminchannelconfig = config.get(str(message.guild.id),'admin_channel')
