@@ -25,7 +25,6 @@ devid = 183394842125008896
 
 @client.event
 async def on_message(message):
-    aaa
     guildid = message.guild.id
     today = datetime.date.today()
 
