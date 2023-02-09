@@ -19,13 +19,13 @@ client = discord.Client(intents=discord.Intents.all())
 messages = []
 senders = {}
 
-freeTime = (60 * 5) # 30 minutes
+freeTime = (60 * 2) # 2 minutes
 premTime = 10 # 10 seconds
 devid = 183394842125008896
 
 @client.event
 async def on_message(message):
-    
+    aaa
     guildid = message.guild.id
     today = datetime.date.today()
 
