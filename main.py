@@ -116,12 +116,17 @@ async def on_message(message):
                 await message.channel.send("You do not have permission to use that command.")
             return
         
+        elif (messageContent == "!mimi warn"):
+            await message.channel.send("https://i.imgur.com/NSKkKKg.png")
+            return
+        
         # no arguments
         else:
             await message.channel.send("""!mimi: List of possible commands
             !mimi source: View my source code on github
             !mimi patreon: Patreon info
             !mimi setadmin (channel ID): Set my admin channel. Please use the specific channel ID
+            !mimi warn: AI sentience warning
             Just saying \"mimi\" somewhere in your message: AI generated text response")""")
             return
 
