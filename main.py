@@ -75,7 +75,7 @@ async def on_message(message):
     # Get the last 500 characters of this specific log file
     with open(logfilepath, "r") as log:
         text = log.read()
-        prompt = text[-500:]
+        prompt = text[-2000:]
     
     timenow = time.time()
 
@@ -145,7 +145,7 @@ async def on_message(message):
             response = openai.Completion.create(
                 engine="text-davinci-003",
                 prompt=mimiPrompt,
-                max_tokens=3500,
+                max_tokens=8000,
                 n = 1,
                 stop=None,
                 temperature=0.5
