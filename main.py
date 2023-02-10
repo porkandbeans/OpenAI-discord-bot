@@ -23,6 +23,8 @@ freeTime = (60 * 2) # 2 minutes
 premTime = 10 # 10 seconds
 devid = 183394842125008896
 
+error = "none"
+
 @client.event
 async def on_message(message):
     guildid = message.guild.id
@@ -115,9 +117,18 @@ async def on_message(message):
                 await message.channel.send("You do not have permission to use that command.")
             return
         
+        elif (messageContent == "!mimi err"):
+            await message.channel.send(error)
+            return
+        
         # no arguments
         else:
-            await message.channel.send("!mimi: List of possible commands\n!mimi source: View my source code on github\n!mimi patreon: Patreon info\n!mimi setadmin (channel ID): Set my admin channel. Please use the specific channel ID\nJust saying \"mimi\" somewhere in your message: AI generated text response")
+            await message.channel.send("""!mimi: List of possible commands
+            !mimi source: View my source code on github
+            !mimi patreon: Patreon info
+            !mimi setadmin (channel ID): Set my admin channel. Please use the specific channel ID
+            !mimi err: view last error
+            Just saying \"mimi\" somewhere in your message: AI generated text response")"""
             return
 
     # OpenAI trigger
@@ -165,8 +176,42 @@ async def on_message(message):
                 else:
                     messages.append("MIMI: I have nothing to say to that.")
                     await message.channel.send("I have nothing to say to that.")
-        except:
+
+        except openai.error.Timeout as e:
             await message.channel.send("There was an error and I was not able to come up with a response.")
+            #Handle timeout error, e.g. retry or log
+            error = "OpenAI API request timed out: {e}"
+            pass
+        except openai.error.APIError as e:
+            await message.channel.send("There was an error and I was not able to come up with a response.")
+            #Handle API error, e.g. retry or log
+            error = "OpenAI API returned an API Error: {e}"
+            pass
+        except openai.error.APIConnectionError as e:
+            await message.channel.send("There was an error and I was not able to come up with a response.")
+            #Handle connection error, e.g. check network or log
+            error = "OpenAI API request failed to connect: {e}"
+            pass
+        except openai.error.InvalidRequestError as e:
+            await message.channel.send("There was an error and I was not able to come up with a response.")
+            #Handle invalid request error, e.g. validate parameters or log
+            error = "OpenAI API request was invalid: {e}"
+            pass
+        except openai.error.AuthenticationError as e:
+            await message.channel.send("There was an error and I was not able to come up with a response.")
+            #Handle authentication error, e.g. check credentials or log
+            error = "OpenAI API request was not authorized: {e}"
+            pass
+        except openai.error.PermissionError as e:
+            await message.channel.send("There was an error and I was not able to come up with a response.")
+            #Handle permission error, e.g. check scope or log
+            error = "OpenAI API request was not permitted: {e}"
+            pass
+        except openai.error.RateLimitError as e:
+            await message.channel.send("There was an error and I was not able to come up with a response.")
+            #Handle rate limit error, e.g. wait or log
+            error = "OpenAI API request exceeded rate limit: {e}"
+            pass
 
 @client.event
 async def on_message_delete(message):
