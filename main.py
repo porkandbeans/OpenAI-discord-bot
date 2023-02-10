@@ -128,7 +128,7 @@ async def on_message(message):
             !mimi patreon: Patreon info
             !mimi setadmin (channel ID): Set my admin channel. Please use the specific channel ID
             !mimi err: view last error
-            Just saying \"mimi\" somewhere in your message: AI generated text response")"""
+            Just saying \"mimi\" somewhere in your message: AI generated text response")""")
             return
 
     # OpenAI trigger
