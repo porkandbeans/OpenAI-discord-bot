@@ -75,7 +75,7 @@ async def on_message(message):
     # Get the last 500 characters of this specific log file
     with open(logfilepath, "r") as log:
         text = log.read()
-        prompt = text[-2000:]
+        prompt = text[-1000:]
     
     timenow = time.time()
 
