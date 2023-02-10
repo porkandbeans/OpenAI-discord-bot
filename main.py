@@ -22,6 +22,8 @@ senders = {}
 freeTime = (60 * 2) # 2 minutes
 premTime = 10 # 10 seconds
 
+devid = 183394842125008896
+
 @client.event
 async def on_message(message):
     guildid = message.guild.id
