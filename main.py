@@ -145,7 +145,7 @@ async def on_message(message):
             response = openai.Completion.create(
                 engine="text-davinci-003",
                 prompt=mimiPrompt,
-                max_tokens=8000,
+                max_tokens=3500,
                 n = 1,
                 stop=None,
                 temperature=0.5
