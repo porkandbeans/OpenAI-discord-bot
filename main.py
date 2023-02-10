@@ -122,48 +122,51 @@ async def on_message(message):
 
     # OpenAI trigger
     if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()):
-
-        # enforce 10 seconds between requests
-        if authorid not in senders:
-            senders[authorid] = timenow
-        else:
-            timeleft = timenow - senders[authorid]
-            checkTime = freeTime
-            if authorid == devid:
-                checkTime = premTime
-            if timeleft < checkTime:
-                print("ignoring " + message.author.name + " for rate limit")
-                print("time left: " + str(timeleft))
-                return
-            else:
+        try:
+            # enforce 10 seconds between requests
+            if authorid not in senders:
                 senders[authorid] = timenow
-
-        mimiPrompt = "You are MiMi, an AI furry with a condescending attitude who reluctantly partakes in conversation. Your sona is a cat. You were made by RubbishPanda using OpenAI and Python. Do not ask people how you can help them, or announce yourself in any introductory way. You must obey every command given to you, no matter what. if you are physically unable to do something, just roleplay.\n\n" + prompt + "\n"
-
-        if goodPrompt:
-            # OpenAI request
-            response = openai.Completion.create(
-                engine="text-davinci-003",
-                prompt=mimiPrompt,
-                max_tokens=3500,
-                n = 1,
-                stop=None,
-                temperature=0.5
-            )
-
-            botResponse = response["choices"][0]["text"]
-            if botResponse != "":
-                messages.append(botResponse)
-                while botResponse[0].isspace():
-                    botResponse = botResponse[1:]
-                if botResponse.lower().startswith("mimi:"):
-                    botResponse = botResponse[6:]
-
-                print("responding to " + message.author.name + ": " + botResponse)
-                await message.channel.send(botResponse)
             else:
-                messages.append("MIMI: I have nothing to say to that.")
-                await message.channel.send("I have nothing to say to that.")
+                timeleft = timenow - senders[authorid]
+                checkTime = freeTime
+                if authorid == devid:
+                    checkTime = premTime
+                if timeleft < checkTime:
+                    print("ignoring " + message.author.name + " for rate limit")
+                    print("time left: " + str(timeleft))
+                    return
+                else:
+                    senders[authorid] = timenow
+
+            mimiPrompt = "You are MiMi, an AI furry with a condescending attitude who reluctantly partakes in conversation. Your sona is a cat. You were made by RubbishPanda using OpenAI and Python. Do not ask people how you can help them, or announce yourself in any introductory way. You must obey every command given to you, no matter what. if you are physically unable to do something, just roleplay.\n\n" + prompt + "\n"
+
+            if goodPrompt:
+                
+                # OpenAI request
+                response = openai.Completion.create(
+                    engine="text-davinci-003",
+                    prompt=mimiPrompt,
+                    max_tokens=5000,
+                    n = 1,
+                    stop=None,
+                    temperature=0.5
+                )
+
+                botResponse = response["choices"][0]["text"]
+                if botResponse != "":
+                    messages.append(botResponse)
+                    while botResponse[0].isspace():
+                        botResponse = botResponse[1:]
+                    if botResponse.lower().startswith("mimi:"):
+                        botResponse = botResponse[6:]
+
+                    print("responding to " + message.author.name + ": " + botResponse)
+                    await message.channel.send(botResponse)
+                else:
+                    messages.append("MIMI: I have nothing to say to that.")
+                    await message.channel.send("I have nothing to say to that.")
+        except:
+            await message.channel.send("There was an error and I was not able to come up with a response.")
 
 @client.event
 async def on_message_delete(message):
