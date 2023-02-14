@@ -4,6 +4,7 @@ import openai
 import time
 import datetime
 import discord
+from discord.utils import get
 import configparser
 from dotenv import load_dotenv
 
@@ -49,7 +50,8 @@ async def on_message(message):
     authorRoles = message.author.roles
 
     for premRole in twitchsubs:
-        if premRole in authorRoles:
+        role = get(message.guild.roles, id=premRole)
+        if role in authorRoles:
             premium = True
 
     messageContent = message.content
