@@ -24,8 +24,16 @@ premTime = 10 # 10 seconds
 
 devid = 183394842125008896
 
+twitchsubs = [
+    1074856739255615529,
+    1074856739255615530,
+    1074856739255615531,
+    1074856739255615532
+    ]
+
 @client.event
 async def on_message(message):
+    premium = False
     guildid = message.guild.id
     today = datetime.date.today()
 
@@ -34,6 +42,16 @@ async def on_message(message):
     messageGuild = "logs/" + message.guild.name + "_" + str(guildid)
     messageThread = str(message.channel.id)
     authorid = message.author.id
+
+    if authorid == devid:
+        premium = True
+
+    authorRoles = message.author.roles
+
+    for premRole in twitchsubs:
+        if premRole in authorRoles:
+            premium = True
+
     messageContent = message.content
 
     # start logging
@@ -139,7 +157,7 @@ async def on_message(message):
             else:
                 timeleft = timenow - senders[authorid]
                 checkTime = freeTime
-                if authorid == devid:
+                if premium:
                     checkTime = premTime
                 if timeleft < checkTime:
                     print("ignoring " + message.author.name + " for rate limit")
