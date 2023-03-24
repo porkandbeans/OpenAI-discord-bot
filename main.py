@@ -175,11 +175,11 @@ async def on_message(message):
                 # OpenAI request
                 response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",
-                    prompt=mimiPrompt,
                     max_tokens=3500,
                     n = 1,
                     stop=None,
-                    temperature=0.5
+                    temperature=0.5,
+                    messages=[{"role": "user", "content": mimiPrompt}]
                 )
 
                 botResponse = response["choices"][0]["text"]
