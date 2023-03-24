@@ -173,8 +173,8 @@ async def on_message(message):
             if goodPrompt:
                 
                 # OpenAI request
-                response = openai.Completion.create(
-                    engine="gpt-4",
+                response = openai.ChatCompletion.create(
+                    engine="gpt-3.5-turbo",
                     prompt=mimiPrompt,
                     max_tokens=3500,
                     n = 1,
