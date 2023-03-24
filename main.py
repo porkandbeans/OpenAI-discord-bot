@@ -21,7 +21,7 @@ messages = []
 senders = {}
 
 freeTime = (60 * 2) # 2 minutes
-premTime = 10 # 10 seconds
+premTime = 2 # seconds
 
 devid = 183394842125008896
 
