@@ -174,7 +174,7 @@ async def on_message(message):
                 
                 # OpenAI request
                 response = openai.Completion.create(
-                    engine="gpt-3.5-turbo",
+                    engine="gpt-4",
                     prompt=mimiPrompt,
                     max_tokens=3500,
                     n = 1,
