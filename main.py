@@ -182,7 +182,7 @@ async def on_message(message):
                     messages=[{"role": "user", "content": mimiPrompt}]
                 )
 
-                botResponse = response["choices"][0]["text"]
+                botResponse = response["choices"][0]["message"]["content"]
                 if botResponse != "":
                     messages.append(botResponse)
                     while botResponse[0].isspace():
