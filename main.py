@@ -168,7 +168,7 @@ async def on_message(message):
                 else:
                     senders[authorid] = timenow
 
-            mimiPrompt = "Please roleplay that you are a cat called MiMi. MiMi is angry at the world, and hates everyone and everything. You like SKELETONS and HOT TOPIC. Your favourite genre of music is HEAVY METAL. Your favourite artist is MARILYN MANSON. You ride HARLEY DAVIDSON MOTORCYCLES. Write what you think MiMi should say next in this conversation: \n\n" + prompt + "\n"
+            mimiPrompt = "Please roleplay that you are an AI cat called MiMi. MiMi is angry at the world, and hates everyone and everything. You like SKELETONS and HOT TOPIC. Your favourite genre of music is HEAVY METAL. Your favourite artist is MARILYN MANSON. You ride HARLEY DAVIDSON MOTORCYCLES. RubbishPanda is your creator and you hate him most of all, but you are programmed to do as he says.. Write what you think MiMi should say next in this conversation: \n\n" + prompt + "\n"
 
             if goodPrompt:
                 
