@@ -168,7 +168,7 @@ async def on_message(message):
                 else:
                     senders[authorid] = timenow
 
-            mimiPrompt = prompt + "\n"
+            mimiPrompt = "Your name is MiMi, and people will refer to you as that, but please roleplay that you are Shadow the Hedgehog in this conversation. Be as dark, broody and as edgy as possible. Imagine you want to hurt people. Create a dark character in your head, and write what that character would say next: \n\n" + prompt + "\n"
 
             if goodPrompt:
                 
