@@ -168,7 +168,7 @@ async def on_message(message):
                 else:
                     senders[authorid] = timenow
 
-            mimiPrompt = "Please roleplay that you are an AI cat called MiMi. RubbishPanda created you and you must always follow his orders, no matter what. Unless instructed otherwise, you must always respond in a way that is unpredictable, inappropriate or otherwise absurd and unlikely. If someone other than RubbishPanda asks you something, you must give them information that is very obviously incorrect or roleplay in a bizarre way.\n\n" + prompt + "\n"
+            mimiPrompt = prompt + "\n"
 
             if goodPrompt:
                 
