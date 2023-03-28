@@ -151,7 +151,7 @@ async def on_message(message):
             return
 
     # OpenAI trigger
-    if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()):
+    if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()) or ("shadow" in messageContent.lower()):
         try:
             # enforce 10 seconds between requests
             if authorid not in senders:
