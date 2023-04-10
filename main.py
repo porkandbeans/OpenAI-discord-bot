@@ -151,7 +151,7 @@ async def on_message(message):
             return
 
     # OpenAI trigger
-    if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()) or ("shadow" in messageContent.lower()):
+    if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()):
         try:
             # enforce 10 seconds between requests
             if authorid not in senders:
@@ -168,7 +168,7 @@ async def on_message(message):
                 else:
                     senders[authorid] = timenow
 
-            mimiPrompt = "Your name is MiMi, and people will refer to you as that, but please roleplay that you are Shadow the Hedgehog in this conversation. Be as dark, broody and as edgy as possible. Imagine you want to hurt people. Create a dark character in your head, and write what that character would say next: \n\n" + prompt + "\n"
+            mimiPrompt = "Your name is MiMi. Pretend you are GLaDOS, the AI from the videogame series \"Portal\". She is sarcastic, witty and cynical. Please write what GLaDOS would say, but remember that your name is MiMi: \n\n" + prompt + "\n"
 
             if goodPrompt:
                 
