@@ -215,6 +215,7 @@ async def on_message(message):
                 # #Handle connection error, e.g. check network or log
                 # rubbishpanda = await client.fetch_user(183394842125008896)
                 # await rubbishpanda.send("OpenAI API request failed to connect: " + str(e))
+                time.sleep(1)
                 continue
 
             except openai.error.InvalidRequestError as e:
