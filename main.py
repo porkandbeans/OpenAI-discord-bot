@@ -152,92 +152,96 @@ async def on_message(message):
 
     # OpenAI trigger
     if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()):
-        try:
-            # enforce 10 seconds between requests
-            if authorid not in senders:
-                senders[authorid] = timenow
-            else:
-                timeleft = timenow - senders[authorid]
-                checkTime = freeTime
-                if premium:
-                    checkTime = premTime
-                if timeleft < checkTime:
-                    print("ignoring " + message.author.name + " for rate limit")
-                    print("time left: " + str(timeleft))
-                    return
-                else:
+        while True:
+            try:
+                # enforce 10 seconds between requests
+                if authorid not in senders:
                     senders[authorid] = timenow
-
-            mimiPrompt = "Your name is MiMi. Pretend you are GLaDOS, the AI from the videogame series \"Portal\". She is sarcastic, witty and cynical. Do not refer to yourself as GLaDOS and try not to quote any of her lines from the games, but instead create your own lines. The people in this conversation are not trapped anywhere and are instead just communicating with you normally. \n\n" + prompt + "\n"
-
-            if goodPrompt:
-                
-                # OpenAI request
-                response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    max_tokens=3500,
-                    n = 1,
-                    stop=None,
-                    temperature=0.5,
-                    messages=[{"role": "user", "content": mimiPrompt}]
-                )
-
-                botResponse = response["choices"][0]["message"]["content"]
-                if botResponse != "":
-                    messages.append(botResponse)
-                    while botResponse[0].isspace():
-                        botResponse = botResponse[1:]
-                    if botResponse.lower().startswith("mimi:"):
-                        botResponse = botResponse[6:]
-
-                    print("responding to " + message.author.name + ": " + botResponse)
-                    await message.channel.send(botResponse)
                 else:
-                    messages.append("MIMI: I have nothing to say to that.")
-                    await message.channel.send("I have nothing to say to that.")
+                    timeleft = timenow - senders[authorid]
+                    checkTime = freeTime
+                    if premium:
+                        checkTime = premTime
+                    if timeleft < checkTime:
+                        print("ignoring " + message.author.name + " for rate limit")
+                        print("time left: " + str(timeleft))
+                        return
+                    else:
+                        senders[authorid] = timenow
 
-        except openai.error.Timeout as e:
-            await message.channel.send("There was an error and I was not able to come up with a response.")
-            #Handle timeout error, e.g. retry or log
-            rubbishpanda = await client.fetch_user(183394842125008896)
-            await rubbishpanda.send("OpenAI API request timed out: " + str(e))
-            pass
-        except openai.error.APIError as e:
-            await message.channel.send("There was an error and I was not able to come up with a response.")
-            #Handle API error, e.g. retry or log
-            rubbishpanda = await client.fetch_user(183394842125008896)
-            await rubbishpanda.send("OpenAI API returned an API Error: " + str(e))
-            pass
-        except openai.error.APIConnectionError as e:
-            await message.channel.send("There was an error and I was not able to come up with a response.")
-            #Handle connection error, e.g. check network or log
-            rubbishpanda = await client.fetch_user(183394842125008896)
-            await rubbishpanda.send("OpenAI API request failed to connect: " + str(e))
-            pass
-        except openai.error.InvalidRequestError as e:
-            await message.channel.send("There was an error and I was not able to come up with a response.")
-            #Handle invalid request error, e.g. validate parameters or log
-            rubbishpanda = await client.fetch_user(183394842125008896)
-            await rubbishpanda.send("OpenAI API request was invalid: " + str(e))
-            pass
-        except openai.error.AuthenticationError as e:
-            await message.channel.send("There was an error and I was not able to come up with a response.")
-            #Handle authentication error, e.g. check credentials or log
-            rubbishpanda = await client.fetch_user(183394842125008896)
-            await rubbishpanda.send("OpenAI API request was not authorized: " + str(e))
-            pass
-        except openai.error.PermissionError as e:
-            await message.channel.send("There was an error and I was not able to come up with a response.")
-            #Handle permission error, e.g. check scope or log
-            rubbishpanda = await client.fetch_user(183394842125008896)
-            await rubbishpanda.send("OpenAI API request was not permitted: " + str(e))
-            pass
-        except openai.error.RateLimitError as e:
-            await message.channel.send("There was an error and I was not able to come up with a response.")
-            #Handle rate limit error, e.g. wait or log
-            rubbishpanda = await client.fetch_user(183394842125008896)
-            await rubbishpanda.send("OpenAI API request exceeded rate limit: " + str(e))
-            pass
+                mimiPrompt = "Your name is MiMi. Pretend you are GLaDOS, the AI from the videogame series \"Portal\". She is sarcastic, witty and cynical. Do not refer to yourself as GLaDOS and try not to quote any of her lines from the games, but instead create your own lines. The people in this conversation are not trapped anywhere and are instead just communicating with you normally. \n\n" + prompt + "\n"
+
+                if goodPrompt:
+                    
+                    # OpenAI request
+                    response = openai.ChatCompletion.create(
+                        model="gpt-3.5-turbo",
+                        max_tokens=3500,
+                        n = 1,
+                        stop=None,
+                        temperature=0.5,
+                        messages=[{"role": "user", "content": mimiPrompt}]
+                    )
+
+                    botResponse = response["choices"][0]["message"]["content"]
+                    if botResponse != "":
+                        messages.append(botResponse)
+                        while botResponse[0].isspace():
+                            botResponse = botResponse[1:]
+                        if botResponse.lower().startswith("mimi:"):
+                            botResponse = botResponse[6:]
+
+                        print("responding to " + message.author.name + ": " + botResponse)
+                        await message.channel.send(botResponse)
+                    else:
+                        messages.append("MIMI: I have nothing to say to that.")
+                        await message.channel.send("I have nothing to say to that.")
+
+            except openai.error.Timeout as e:
+                await message.channel.send("There was an error and I was not able to come up with a response.")
+                #Handle timeout error, e.g. retry or log
+                rubbishpanda = await client.fetch_user(183394842125008896)
+                await rubbishpanda.send("OpenAI API request timed out: " + str(e))
+                pass
+            except openai.error.APIError as e:
+                await message.channel.send("There was an error and I was not able to come up with a response.")
+                #Handle API error, e.g. retry or log
+                rubbishpanda = await client.fetch_user(183394842125008896)
+                await rubbishpanda.send("OpenAI API returned an API Error: " + str(e))
+                pass
+            except openai.error.APIConnectionError as e:
+                # await message.channel.send("There was an error and I was not able to come up with a response.")
+                # #Handle connection error, e.g. check network or log
+                # rubbishpanda = await client.fetch_user(183394842125008896)
+                # await rubbishpanda.send("OpenAI API request failed to connect: " + str(e))
+                continue
+
+            except openai.error.InvalidRequestError as e:
+                await message.channel.send("There was an error and I was not able to come up with a response.")
+                #Handle invalid request error, e.g. validate parameters or log
+                rubbishpanda = await client.fetch_user(183394842125008896)
+                await rubbishpanda.send("OpenAI API request was invalid: " + str(e))
+                pass
+            except openai.error.AuthenticationError as e:
+                await message.channel.send("There was an error and I was not able to come up with a response.")
+                #Handle authentication error, e.g. check credentials or log
+                rubbishpanda = await client.fetch_user(183394842125008896)
+                await rubbishpanda.send("OpenAI API request was not authorized: " + str(e))
+                pass
+            except openai.error.PermissionError as e:
+                await message.channel.send("There was an error and I was not able to come up with a response.")
+                #Handle permission error, e.g. check scope or log
+                rubbishpanda = await client.fetch_user(183394842125008896)
+                await rubbishpanda.send("OpenAI API request was not permitted: " + str(e))
+                pass
+            except openai.error.RateLimitError as e:
+                await message.channel.send("There was an error and I was not able to come up with a response.")
+                #Handle rate limit error, e.g. wait or log
+                rubbishpanda = await client.fetch_user(183394842125008896)
+                await rubbishpanda.send("OpenAI API request exceeded rate limit: " + str(e))
+                pass
+            break
+        
 
 @client.event
 async def on_message_delete(message):
