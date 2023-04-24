@@ -196,6 +196,7 @@ async def on_message(message):
                     else:
                         messages.append("MIMI: I have nothing to say to that.")
                         await message.channel.send("I have nothing to say to that.")
+                    break
 
             except openai.error.Timeout as e:
                 await message.channel.send("There was an error and I was not able to come up with a response.")
