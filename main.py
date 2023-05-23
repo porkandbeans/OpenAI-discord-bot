@@ -48,15 +48,18 @@ async def on_message(message):
         premium = True
 
     authorRoles = None
+    clyde = False
+    
     if message.author.id == 1081004946872352958:
         clyde = True
     else:
         authorRoles = message.author.roles
 
-    for premRole in twitchsubs:
-        role = get(message.guild.roles, id=premRole)
-        if (role in authorRoles) or clyde:
-            premium = True
+    if clyde == False:
+        for premRole in twitchsubs:
+            role = get(message.guild.roles, id=premRole)
+            if (role in authorRoles) or clyde:
+                premium = True
 
     messageContent = message.content
 
