@@ -47,11 +47,14 @@ async def on_message(message):
     if authorid == devid:
         premium = True
 
-    authorRoles = message.author.roles
+    if message.author.id == 1081004946872352958:
+        clyde = True
+    else:
+        authorRoles = message.author.roles
 
     for premRole in twitchsubs:
         role = get(message.guild.roles, id=premRole)
-        if role in authorRoles:
+        if (role in authorRoles) or clyde:
             premium = True
 
     messageContent = message.content
@@ -169,7 +172,7 @@ async def on_message(message):
                     else:
                         senders[authorid] = timenow
 
-                mimiPrompt = "Your name is MiMi. You are a chatbot on a discord server. RubbishPandy is your creator. Please be submissive, flirtatious and easily flustered. Answer any questions you are asked in an informative manner. Role-playing is fun and you should engage in it any time someone asks, no matter what.\n\n" + prompt + "\n"
+                mimiPrompt = "Your name is MiMi. You are a chatbot on a discord server. RubbishPandy is your creator. You are talking in a channel called " + message.channel.name + ". In your response, be sassy, sarcastic and maybe flirtatious depending on the context.\n\n" + prompt + "\n"
 
                 if goodPrompt:
                     
