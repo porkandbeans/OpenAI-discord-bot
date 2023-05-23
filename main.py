@@ -52,6 +52,7 @@ async def on_message(message):
     
     if message.author.id == 1081004946872352958:
         clyde = True
+        premium = True
     else:
         authorRoles = message.author.roles
 
