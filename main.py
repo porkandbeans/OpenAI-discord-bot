@@ -161,51 +161,50 @@ async def on_message(message):
     # OpenAI trigger
     if ("mimi" in messageContent.lower()) or ("@1068623394817458197" in messageContent.lower()):
         while True:
-            try:
-                # enforce 10 seconds between requests
-                if authorid not in senders:
-                    senders[authorid] = timenow
+            # enforce 10 seconds between requests
+            if authorid not in senders:
+                senders[authorid] = timenow
+            else:
+                timeleft = timenow - senders[authorid]
+                checkTime = freeTime
+                if premium:
+                    checkTime = premTime
+                if timeleft < checkTime:
+                    print("ignoring " + message.author.name + " for rate limit")
+                    print("time left: " + str(timeleft))
+                    return
                 else:
-                    timeleft = timenow - senders[authorid]
-                    checkTime = freeTime
-                    if premium:
-                        checkTime = premTime
-                    if timeleft < checkTime:
-                        print("ignoring " + message.author.name + " for rate limit")
-                        print("time left: " + str(timeleft))
-                        return
-                    else:
-                        senders[authorid] = timenow
+                    senders[authorid] = timenow
 
-                mimiPrompt = "Your name is MiMi. You are a chatbot on a discord server. RubbishPandy is your creator. You are talking in a channel called " + message.channel.name + ". In your response, be sassy, sarcastic and maybe flirtatious depending on the context.\n\n" + prompt + "\n"
+            mimiPrompt = "Your name is MiMi. You are a chatbot on a discord server. RubbishPandy is your creator. You are talking in a channel called " + message.channel.name + ". In your response, be sassy, sarcastic and maybe flirtatious depending on the context.\n\n" + prompt + "\n"
 
-                if goodPrompt:
-                    
-                    # OpenAI request
-                    response = openai.ChatCompletion.create(
-                        model="gpt-3.5-turbo",
-                        max_tokens=3500,
-                        n = 1,
-                        stop=None,
-                        temperature=0.5,
-                        messages=[{"role": "user", "content": mimiPrompt}]
-                    )
+            if goodPrompt:
+                
+                # OpenAI request
+                response = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    max_tokens=3500,
+                    n = 1,
+                    stop=None,
+                    temperature=0.5,
+                    messages=[{"role": "user", "content": mimiPrompt}]
+                )
 
-                    botResponse = response["choices"][0]["message"]["content"]
-                    if botResponse != "":
-                        messages.append(botResponse)
-                        while botResponse[0].isspace():
-                            botResponse = botResponse[1:]
-                        if botResponse.lower().startswith("mimi:"):
-                            botResponse = botResponse[6:]
+                botResponse = response["choices"][0]["message"]["content"]
+                if botResponse != "":
+                    messages.append(botResponse)
+                    while botResponse[0].isspace():
+                        botResponse = botResponse[1:]
+                    if botResponse.lower().startswith("mimi:"):
+                        botResponse = botResponse[6:]
 
-                        print("responding to " + message.author.name + ": " + botResponse)
-                        await message.channel.send(botResponse)
-                    else:
-                        messages.append("MIMI: I have nothing to say to that.")
-                        await message.channel.send("I have nothing to say to that.")
-                    break
-            break
+                    print("responding to " + message.author.name + ": " + botResponse)
+                    await message.channel.send(botResponse)
+                else:
+                    messages.append("MIMI: I have nothing to say to that.")
+                    await message.channel.send("I have nothing to say to that.")
+                break
+        break
         
 
 @client.event
