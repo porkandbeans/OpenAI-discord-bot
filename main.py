@@ -203,7 +203,6 @@ async def on_message(message):
                 else:
                     messages.append("MIMI: I have nothing to say to that.")
                     await message.channel.send("I have nothing to say to that.")
-                break
         break
         
 
