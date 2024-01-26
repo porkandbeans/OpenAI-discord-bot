@@ -205,52 +205,6 @@ async def on_message(message):
                         messages.append("MIMI: I have nothing to say to that.")
                         await message.channel.send("I have nothing to say to that.")
                     break
-
-            except openai.APITimeoutError as e:
-                await message.channel.send("There was an error and I was not able to come up with a response.")
-                #Handle timeout error, e.g. retry or log
-                rubbishpanda = await client.fetch_user(183394842125008896)
-                await rubbishpanda.send("OpenAI API request timed out: " + str(e))
-                pass
-            except openai.APIError as e:
-                await message.channel.send("There was an error and I was not able to come up with a response.")
-                #Handle API error, e.g. retry or log
-                rubbishpanda = await client.fetch_user(183394842125008896)
-                await rubbishpanda.send("OpenAI API returned an API Error: " + str(e))
-                pass
-            except openai.APIConnectionError as e:
-                # await message.channel.send("There was an error and I was not able to come up with a response.")
-                # #Handle connection error, e.g. check network or log
-                # rubbishpanda = await client.fetch_user(183394842125008896)
-                # await rubbishpanda.send("OpenAI API request failed to connect: " + str(e))
-                print("broken pipe, retrying...")
-                time.sleep(3)
-                continue
-
-            except openai.InvalidRequestError as e:
-                await message.channel.send("There was an error and I was not able to come up with a response.")
-                #Handle invalid request error, e.g. validate parameters or log
-                rubbishpanda = await client.fetch_user(183394842125008896)
-                await rubbishpanda.send("OpenAI API request was invalid: " + str(e))
-                pass
-            except openai.AuthenticationError as e:
-                await message.channel.send("There was an error and I was not able to come up with a response.")
-                #Handle authentication error, e.g. check credentials or log
-                rubbishpanda = await client.fetch_user(183394842125008896)
-                await rubbishpanda.send("OpenAI API request was not authorized: " + str(e))
-                pass
-            except openai.PermissionError as e:
-                await message.channel.send("There was an error and I was not able to come up with a response.")
-                #Handle permission error, e.g. check scope or log
-                rubbishpanda = await client.fetch_user(183394842125008896)
-                await rubbishpanda.send("OpenAI API request was not permitted: " + str(e))
-                pass
-            except openai.RateLimitError as e:
-                await message.channel.send("There was an error and I was not able to come up with a response.")
-                #Handle rate limit error, e.g. wait or log
-                rubbishpanda = await client.fetch_user(183394842125008896)
-                await rubbishpanda.send("OpenAI API request exceeded rate limit: " + str(e))
-                pass
             break
         
 
