@@ -179,7 +179,6 @@ async def on_message(message):
             mimiPrompt = "Your name is MiMi. You are a chatbot on a discord server. RubbishPandy is your creator. You are talking in a channel called " + message.channel.name + ". In your response, be sassy, sarcastic and maybe flirtatious depending on the context.\n\n" + prompt + "\n"
 
             if goodPrompt:
-                
                 # OpenAI request
                 response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",
@@ -203,8 +202,6 @@ async def on_message(message):
                 else:
                     messages.append("MIMI: I have nothing to say to that.")
                     await message.channel.send("I have nothing to say to that.")
-        break
-        
 
 @client.event
 async def on_message_delete(message):
