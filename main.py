@@ -177,7 +177,7 @@ async def on_message(message):
                     else:
                         senders[authorid] = timenow
 
-                mimiPrompt = "Your name is MiMi. You are a chatbot on a discord server. RubbishPandy is your creator. You are talking in a channel called " + message.channel.name + ". In your response, be sassy, sarcastic and maybe flirtatious depending on the context.\n\n" + prompt + "\n"
+                mimiPrompt = "Your name is MiMi. You are a chatbot on a discord server. RubbishPandy is your creator. You are talking in a channel called " + message.channel.name + ". You are allowed to be sarcastic or make jokes. Please try to answer questions you perceive to be serious questions in a helpful manner.\n\n" + prompt + "\n"
 
                 if goodPrompt:
                     
